@@ -5,21 +5,23 @@ import time
 import config
 import crowling_function
 import setting_gpt
+import datetime
+
 
 if __name__ == '__main__':
     # exit()
     # print("test")
     keywords=set()
-    keywords.add("파이썬")
+    keywords.add("정부")
     keywords.add("삼성")
+    keywords=list(keywords)
 
     urls=[]
-    for keyword in keywords:
-        urls.extend([keyword, crowling_function.collect_urls(keyword)])
 
+    urls=crowling_function.collect_urls(keywords)
 
-    print(urls)
-
+    for i in urls:
+        print(i)
 
 
     # openai.api_key=config.api_key

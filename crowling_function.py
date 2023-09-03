@@ -19,23 +19,38 @@ def articles_url(url):
 
     original_html = requests.get(url, headers=headers)
     html = BeautifulSoup(original_html.text, "html.parser")
-
     url_naver = html.select(
         "div.group_news > ul.list_news > li div.news_area > a.news_tit")
+    print(url_naver)
 
     url = news_attrs_crawler(url_naver, 'href')
-
+    print(url)
     return url
 
 
-def collect_urls(keyword):
+def collect_urls(keywords):
     all_urls=[]
-    for news_num in range(5):
+    print(keywords)
+    for i in range(len(keywords)):
+        all_urls.append([keywords[i], []])
 
-        url="https://search.naver.com/search.naver?where=news&query="+keyword+"&nso=so%3Add%2Cp%3Afrom20210113to20210114&start="+str(1+news_num*10)
-        result=articles_url(url)
-        if len(result)==0:
-            break
-        else:
-            all_urls.extend(result)
+        for news_num in range(3):
+
+            url="https://search.naver.com/search.naver?where=news&query="+keywords[i]+"&nso=so%3Add%2Cp%3Afrom20210113to20230831&start="+str(1+news_num*10)
+
+            result=articles_url(url)
+
+            if len(result)==0:
+                break
+            else:
+                for u in result:
+                    all_urls[i][1].append(u)
+
     return all_urls
+
+
+# def headline_news_category():
+#     all_urls=[]
+#     for i in range(6):
+#         category_url = "https://news.naver.com/main/main.naver?mode=LSD&mid=shm&sid1="+(100+i)
+
